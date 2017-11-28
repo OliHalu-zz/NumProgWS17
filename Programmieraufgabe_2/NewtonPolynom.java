@@ -4,9 +4,9 @@ import java.util.Arrays;
  * Die Klasse Newton-Polynom beschreibt die Newton-Interpolation. Die Klasse
  * bietet Methoden zur Erstellung und Auswertung eines Newton-Polynoms, welches
  * uebergebene Stuetzpunkte interpoliert.
- * 
+ *
  * @author braeckle
- * 
+ *
  */
 public class NewtonPolynom implements InterpolationMethod {
 
@@ -33,7 +33,7 @@ public class NewtonPolynom implements InterpolationMethod {
 
 	/**
 	 * Konstruktor
-	 * 
+	 *
 	 * @param x
 	 *            Stuetzstellen
 	 * @param y
@@ -62,7 +62,7 @@ public class NewtonPolynom implements InterpolationMethod {
 	 * Initialisierung der Newtoninterpolation mit beliebigen Stuetzstellen. Die
 	 * Faelle "x und y sind unterschiedlich lang" oder "eines der beiden Arrays
 	 * ist leer" werden nicht beachtet.
-	 * 
+	 *
 	 * @param x
 	 *            Stuetzstellen
 	 * @param y
@@ -82,7 +82,7 @@ public class NewtonPolynom implements InterpolationMethod {
 	 * Diagonale des Dreiecksschemas in der Membervariable f, also f[0],f[1],
 	 * ...,f[n] = [x0...x_n]f,[x1...x_n]f,...,[x_n]f. Diese koennen spaeter bei
 	 * der Erweiterung der Stuetzstellen verwendet werden.
-	 * 
+	 *
 	 * Es gilt immer: x und y sind gleich lang.
 	 */
 	public void computeCoefficients(double[] y) {
@@ -90,12 +90,12 @@ public class NewtonPolynom implements InterpolationMethod {
 		double[] koeff = new double[x.length];
 		this.a = new double[x.length];
 		this.f = new double[x.length];
-		
+
 		//1. Spalte [x_i]f=f(x_i)
 		for (int i=0;i<x.length;i++)	{
 			koeff[i]=y[i];
 		}
-		
+
 		//[x_0]f=f(x_0) ist a_0
 		this.a[0]=koeff[0];
 		this.f[0]=koeff[x.length-1];
@@ -135,7 +135,7 @@ public class NewtonPolynom implements InterpolationMethod {
 	 * Kenntnis der Stuetzstellen und der Diagonalen des Schemas, bzw. der
 	 * Koeffizienten noetig. Ist x_new schon als Stuetzstelle vorhanden, werden
 	 * die Stuetzstellen nicht erweitert.
-	 * 
+	 *
 	 * @param x_new
 	 *            neue Stuetzstelle
 	 * @param y_new
@@ -148,7 +148,7 @@ public class NewtonPolynom implements InterpolationMethod {
 				return;
 			}
 		}
-		
+
 		//Vergrößerung der Arrays x, a und f
 	   /* double[] tmp_x = x.clone();
 	    double[] tmp_a = a.clone();
@@ -156,7 +156,7 @@ public class NewtonPolynom implements InterpolationMethod {
 	    this.x = new double[tmp_x.length+1];
 	    this.a = new double[tmp_a.length+1];
 	    this.f = new double[tmp_f.length+1];
-	    
+
 	    for (int i=0;i<tmp_x.length;i++)	{
 	    	this.x[i]=tmp_x[i];
 	    	this.a[i]=tmp_a[i];
@@ -167,24 +167,24 @@ public class NewtonPolynom implements InterpolationMethod {
 		this.f = Arrays.copyOf(f, f.length+1);
 
 		this.x[x.length-1] = x_new;
-	    //y(x_new)=y_new ist neuer koeffizient
-	    double tmp = y_new;
-	    //f[0]=y_new;
-	    for (int i=1;i<x.length;i++)	
-	    {
-	    	double new_f;
-	    	if(i==1)	{
-		    	new_f =(tmp - f[i-1])/(x_new-this.x[x.length-1-i]);
-	    	} else {
-		    	new_f =(f[i-1] - tmp)/(x_new-this.x[x.length-1-i]);
+		//y(x_new)=y_new ist neuer koeffizient
+		double tmp = y_new;
+		//f[0]=y_new;
+		for (int i=1;i<x.length;i++)
+		{
+			double new_f;
+			if(i==1)	{
+				new_f =(tmp - f[i-1])/(x_new-this.x[x.length-1-i]);
+			} else {
+				new_f =(f[i-1] - tmp)/(x_new-this.x[x.length-1-i]);
 
-	    	}
-	    	tmp = this.f[i];
-	    	this.f[i] = new_f;
+			}
+			tmp = this.f[i];
+			this.f[i] = new_f;
 
-	    }
-	    a[a.length-1]=f[f.length-1];
-	    f[0]=y_new;
+		}
+		a[a.length-1]=f[f.length-1];
+		f[0]=y_new;
 	}
 
 	/**

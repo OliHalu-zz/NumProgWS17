@@ -9,9 +9,9 @@ import java.util.List;
  * Stuetzstellen werden die entsprechenden Stuetzwerte mit einer Geraden
  * verbunden. Liegt eine zu auswertende Stelle z ausserhalb der Stuetzgrenzen,
  * werden die aeussersten Werte y[0] bzw. y[n] zurueckgegeben.
- * 
+ *
  * @author braeckle
- * 
+ *
  */
 public class LinearInterpolation implements InterpolationMethod {
 
@@ -36,7 +36,7 @@ public class LinearInterpolation implements InterpolationMethod {
 	 * und ordnet die Stuetzstellen der Groesse nach. Die Faelle
 	 * "x und y sind unterschiedlich lang" oder "eines der beiden Arrays ist
 	 * leer" werden nicht beachtet.
-	 * 
+	 *
 	 * @param x
 	 *            Stuetzstellen
 	 * @param y
@@ -86,7 +86,7 @@ public class LinearInterpolation implements InterpolationMethod {
 		}
 		return smallest;
 	}
-	
+
 	private double getBiggestElement(double[] x)	{
 		double biggest = x[0];
 		for(int i=0;i<x.length;i++)	{
@@ -101,7 +101,7 @@ public class LinearInterpolation implements InterpolationMethod {
 	 * aeussersten Werte y[0] bzw. y[n] zurueckgegeben. Liegt z zwischen den
 	 * Stuetzstellen x_i und x_i+1, wird eine Gerade mit den Punkten (x_i,y_i)
 	 * und (x_i+1, y_i+1) gebildet und in z ausgewertet.
-	 * 
+	 *
 	 * Die Stuetzstellen liegen der Groesse nach geordnet vor. Der Fall
 	 * ungeordneter Stuetzstellen oder leerer Stuetzstellen muss nicht extra
 	 * behandelt werden.
@@ -112,14 +112,14 @@ public class LinearInterpolation implements InterpolationMethod {
 		//z kleiner als kleinste Sützstelle -> y[0] zurückgeben
 		if(z<x[0])	{
 			return y[0];
-		//z größer als größte Stützstelle -> n=y.length -> y[n] zurückgeben
+			//z größer als größte Stützstelle -> n=y.length -> y[n] zurückgeben
 		} else if (z>x[x.length-1])	{
 			return y[y.length-1];
 		}
 		double result = 0.0;
 		double slope, shift;
-		
-		
+
+
 		//nachbarn von z suchen-> schleife bei index 1 beginnen da y[0] zurückgeben wurd efals z<x[0]
 		for(int i=1;i<x.length;i++)	{
 			if(z<x[i])	{
@@ -130,7 +130,7 @@ public class LinearInterpolation implements InterpolationMethod {
 			}
 		}
 		return result;
-		
+
 	}
 
 }
